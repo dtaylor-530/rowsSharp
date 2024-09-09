@@ -5,6 +5,7 @@ using System.Windows;
 using ObservableTable.Core;
 using RowsSharp.Domain;
 using RowsSharp.Model;
+using static System.Environment;
 
 namespace RowsSharp.ViewModel;
 
@@ -95,8 +96,8 @@ public class CommonViewModel : NotifyPropertyChanged
     /// </summary>
     public string Title => $"{EditorSaveStatus}{CsvName} - RowsSharp";
 
-    private const string ConfigurationPath =
-        "./Userdata/Configurations/Configuration.json";
+    private static readonly string ConfigurationPath =Path.Combine(GetFolderPath(SpecialFolder.ApplicationData), 
+        "RowsSharp/Configuration.json");
 
     public CommonViewModel()
     {

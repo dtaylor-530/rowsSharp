@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <OutputType>WinExe</OutputType>
-    <TargetFramework>net6.0-windows</TargetFramework>
+    <TargetFramework>net8.0-windows7.0</TargetFramework>
     <Nullable>enable</Nullable>
     <UseWPF>true</UseWPF>
 	<Deterministic>False</Deterministic>
@@ -11,6 +11,7 @@
 	<SupportedOSPlatformVersion>7.0</SupportedOSPlatformVersion>
 	<GenerateDocumentationFile>False</GenerateDocumentationFile>
 	<StartupObject></StartupObject>
+	<ApplicationIcon>bin\Debug\net8.0-windows7.0\password icon.ico</ApplicationIcon>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
@@ -30,6 +31,10 @@
   <ItemGroup>
     <Page Remove="Userdata\Configurations\Themes\Dark.xaml" />
     <Page Remove="Userdata\Configurations\Themes\Light.xaml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="bin\Debug\net8.0-windows7.0\password icon.ico" />
   </ItemGroup>
 
   <ItemGroup>
@@ -63,6 +68,7 @@
     <PackageReference Include="Microsoft.Xaml.Behaviors.Wpf" Version="1.1.39">
       <TreatAsUsed>true</TreatAsUsed>
     </PackageReference>
+    <PackageReference Include="NetSoft.Diff" Version="2.0.0" />
     <PackageReference Include="NLog" Version="5.1.4" />
     <PackageReference Include="ObservableTable" Version="23.12.0" />
   </ItemGroup>

@@ -5,8 +5,8 @@
       xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:view="clr-namespace:RowsSharp.View"
-      xmlns:viewmodel="clr-namespace:RowsSharp.ViewModel"
-      d:DataContext="{d:DesignInstance Type=viewmodel:EditorViewModel}"
+      xmlns:viewmodel="clr-namespace:RowsSharp.ViewModel" xmlns:controls="clr-namespace:RowsSharp.Controls"
+             d:DataContext="{d:DesignInstance Type=viewmodel:EditorViewModel}"
       mc:Ignorable="d" 
       d:DesignWidth="1400" d:DesignHeight="600" d:Background="{StaticResource Rows.Background}">
 
@@ -22,6 +22,7 @@
 
         <view:InvertBooleanConverter x:Key="InvertBooleanConverter"/>
         <view:PathToImageConverter x:Key="PathToImageConverter"/>
+        <view:GreaterThanZeroToVisibilityConverter x:Key="GreaterThanZeroToVisibilityConverter"/>
     </UserControl.Resources>
 
     <DockPanel Margin="24,8">
@@ -51,7 +52,6 @@
                     <Setter Property="Width" Value="1"/>
                 </Style>
             </DockPanel.Resources>
-
             <!-- Save -->
             <Button Margin="16,8,8,8" Content="&#xe161;" ToolTip="Save" Command="{Binding Save, Mode=OneTime}"/>
             <!-- Autosave -->
@@ -166,9 +166,9 @@
                             </Style.Triggers>
                         </Style>
                     </TextBox.Style>
-                    <TextBox.InputBindings>
+                    <!--<TextBox.InputBindings>
                         <KeyBinding Key="Enter" Command="{Binding InvokeFilter, Mode=OneTime}"/>
-                    </TextBox.InputBindings>
+                    </TextBox.InputBindings>-->
                 </TextBox>
             </Grid>
         </DockPanel>
@@ -201,6 +201,7 @@
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="{Binding Preferences.Editor.Width, Mode=OneTime}"/>
                 <ColumnDefinition Width="{Binding Preferences.Preview.Width, Mode=OneTime}"/>
+                <ColumnDefinition Width="Auto" MaxWidth="800"/>
             </Grid.ColumnDefinitions>
             <DataGrid Name="Grid"
                     ItemsSource="{Binding CollectionView, Mode=OneTime}" AutoGenerateColumns="False"
@@ -222,7 +223,7 @@
 				    EnableColumnVirtualization="True" EnableRowVirtualization="True"
                     VirtualizingPanel.VirtualizationMode="Recycling"
                     VirtualizingPanel.IsVirtualizing="True"
-                    VirtualizingPanel.ScrollUnit="Pixel">                
+                    VirtualizingPanel.ScrollUnit="Pixel">
                 <DataGrid.ContextMenu>
                     <ContextMenu DataContext="{Binding PlacementTarget, RelativeSource={x:Static RelativeSource.Self}}">
                         <MenuItem Command="{Binding DataContext.CopyPreview, Mode=OneTime}" Header="Copy image" InputGestureText="Ctrl+Shift+C"/>
@@ -367,6 +368,37 @@
                     </Style>
                 </TextBlock.Style>
             </TextBlock>
+
+
+            <Grid Grid.Column="2" 
+                  Visibility="{Binding ElementName=compare_textblock, Path=AdditionsCount, Converter={StaticResource GreaterThanZeroToVisibilityConverter}}">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="30"></RowDefinition>
+                    <RowDefinition Height="*"></RowDefinition>
+                </Grid.RowDefinitions>
+
+
+                <TextBlock Text="{Binding ElementName=compare_textblock, Path=AdditionsCount}"
+                             FontFamily="{StaticResource Rows.FontFamily}"
+                       Foreground="{StaticResource Rows.Text}"
+                           ></TextBlock>
+                
+                <ScrollViewer Grid.Row="1">
+
+                    <controls:CompareTextBlock TextWrapping="WrapWithOverflow"  
+                        x:Name="compare_textblock"
+                       
+                       FontFamily="{StaticResource Rows.FontFamily}"
+                       HighlightForeground="{StaticResource Button.Disabled.Foreground}"
+                       HighlightForeground2="{StaticResource Rows.Text}"
+                       HighlightForeground3="{StaticResource Rows.Text}"
+                       HighlightForeground4="{StaticResource Rows.Text}"             
+                       OriginalText="{Binding Original}"
+                       CompareText="{Binding Modified}">
+
+                    </controls:CompareTextBlock>
+                </ScrollViewer>
+            </Grid>
         </Grid>
     </DockPanel>
 

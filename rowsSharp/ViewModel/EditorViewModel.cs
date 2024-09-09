@@ -1,4 +1,5 @@
 using ObservableTable.Core;
+using ObservableTable.IO;
 using RowsSharp.Domain;
 using RowsSharp.Model;
 using RowsSharp.View;
@@ -131,7 +132,33 @@ public class EditorViewModel : NotifyPropertyChanged
             Interval = Preferences.Editor.AutosaveInterval,
             Enabled = Preferences.Editor.IsAutosaveEnabled
         };
+
+        Modified = Original = Table.ToCsvString();
+        commonViewModel.PropertyChanged += EditorViewModel_PropertyChanged;
+        this.PropertyChanged += ViewModel_PropertyChanged;
     }
+
+    private void ViewModel_PropertyChanged(object? sender, PropertyChangedEventArgs e)
+    {
+        if (e.PropertyName == nameof(FilterText))
+        {
+
+            InvokeFilter.Execute(default);
+        }
+    }
+
+    private void EditorViewModel_PropertyChanged(object? sender, PropertyChangedEventArgs e)
+    {
+        if(e.PropertyName==nameof(IsEditorDirty))
+        {
+            Modified = this.Table.ToCsvString();
+            OnPropertyChanged(nameof(Modified));
+        }   
+
+    }
+
+    public string Original { get; set; }
+    public string Modified { get; set; }
 
     private void Table_TableModified(object? sender, EventArgs e)
     {

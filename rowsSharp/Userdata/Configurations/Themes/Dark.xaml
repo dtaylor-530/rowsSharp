@@ -7,7 +7,7 @@
     <SolidColorBrush x:Key="Rows.Text" Color="#D0D0D0"/>
 
     <SolidColorBrush x:Key="ProgressBar.Background" Color="#FF323232"/>
-    <SolidColorBrush x:Key="ProgressBar.Foreground" Color="#FF00796B"/>
+    <SolidColorBrush x:Key="ProgressBar.Foreground" Color="#2596be"/>
 
     <SolidColorBrush x:Key="Separator.Fill" Color="#565656"/>
 
@@ -45,7 +45,7 @@
     <SolidColorBrush x:Key="OptionMark.Disabled.Glyph" Color="#A0A0A0"/>
     <SolidColorBrush x:Key="OptionMark.Disabled.Foreground" Color="#A0A0A0"/>
 
-    <SolidColorBrush x:Key="ScrollBar.Static.Background" Color="#FF323232"/>
+    <SolidColorBrush x:Key="ScrollBar.Static.Background" Color="Pink"/>
     <SolidColorBrush x:Key="ScrollBar.MouseOver.Background" Color="#FF646464"/>
     <SolidColorBrush x:Key="ScrollBar.Pressed.Background" Color="#FF484848"/>
 
